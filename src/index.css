@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 20 10% 6%;
+    --foreground: 40 20% 95%;
+
+    --card: 20 10% 10%;
+    --card-foreground: 40 20% 95%;
+
+    --popover: 20 10% 8%;
+    --popover-foreground: 40 20% 95%;
+
+    --primary: 38 90% 50%;
+    --primary-foreground: 20 10% 6%;
+
+    --secondary: 20 10% 15%;
+    --secondary-foreground: 40 20% 90%;
+
+    --muted: 20 10% 18%;
+    --muted-foreground: 40 10% 60%;
+
+    --accent: 38 80% 45%;
+    --accent-foreground: 20 10% 6%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 40 20% 95%;
+
+    --border: 40 15% 20%;
+    --input: 20 10% 15%;
+    --ring: 38 90% 50%;
+
+    --radius: 0.75rem;
+
+    /* Custom tokens */
+    --glass-bg: 20 10% 12% / 0.6;
+    --glass-border: 40 20% 30% / 0.2;
+    --glow-primary: 38 90% 50% / 0.3;
+    --glow-subtle: 38 90% 50% / 0.1;
+    
+    --gradient-warm: linear-gradient(135deg, hsl(38 90% 50% / 0.1), hsl(20 80% 40% / 0.05));
+    --gradient-glass: linear-gradient(135deg, hsl(40 20% 95% / 0.05), hsl(40 20% 95% / 0.02));
+    
+    --shadow-glow: 0 0 60px -10px hsl(38 90% 50% / 0.3);
+    --shadow-card: 0 25px 50px -12px hsl(0 0% 0% / 0.5);
+    --shadow-hover: 0 0 40px -5px hsl(38 90% 50% / 0.4);
+
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply relative overflow-hidden rounded-2xl border border-border/30;
+    background: linear-gradient(135deg, hsl(var(--glass-bg)), hsl(20 10% 8% / 0.8));
+    backdrop-filter: blur(20px);
+    box-shadow: var(--shadow-card);
+  }
+
+  .glass-card::before {
+    pointer-events: none;
+    content: '';
+    @apply absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500;
+    background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), hsl(var(--glow-primary)), transparent 40%);
+  }
+
+  .glass-card:hover::before {
+    @apply opacity-100;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(38 90% 60%), hsl(38 70% 45%));
+  }
+
+  .glow-border {
+    @apply relative;
+  }
+
+  .glow-border::after {
+    content: '';
+    @apply absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-300;
+    background: linear-gradient(135deg, hsl(38 90% 50% / 0.5), transparent 50%);
+    z-index: -1;
+  }
+
+  .glow-border:hover::after {
+    @apply opacity-100;
+  }
+
+  .citation-card {
+    @apply glass-card p-6 transition-all duration-300;
+  }
+
+  .citation-card:hover {
+    @apply border-primary/40;
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-4px);
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl font-bold tracking-tight;
+  }
+
+  .section-subtitle {
+    @apply text-lg text-muted-foreground max-w-2xl;
+  }
+
+  .badge-research {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium;
+    background: hsl(38 90% 50% / 0.15);
+    color: hsl(38 90% 60%);
+    border: 1px solid hsl(38 90% 50% / 0.3);
+  }
+
+  .stat-value {
+    @apply text-5xl md:text-6xl font-bold text-gradient;
+  }
+
+  .stat-label {
+    @apply text-sm text-muted-foreground uppercase tracking-widest mt-2;
+  }
+
+  .nav-link {
+    @apply relative text-muted-foreground hover:text-foreground transition-colors duration-300;
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-px bg-primary transition-all duration-300;
+  }
+
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+
+  .language-btn {
+    @apply px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-300 cursor-pointer;
+  }
+
+  .language-btn-active {
+    @apply bg-primary text-primary-foreground cursor-pointer;
+  }
+
+  .language-btn-inactive {
+    @apply text-muted-foreground hover:text-foreground hover:bg-secondary cursor-pointer;
+  }
+}
+
